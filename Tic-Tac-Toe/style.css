@@ -1,0 +1,81 @@
+:root{
+    --cell-size: 100px;
+    --board-gap: 9px;
+    --color-bg: #1e1e2e;
+    --color-cell: #2a2a3d;
+    --color-cell-hover: #33334a;
+    --color-x: #4fc3f7;
+    --color-o: #ff8a65;
+    --color-text: #eaeaea;
+    --border-radius: 8px;
+
+
+}
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: system-ui, -apple-system, sans-serif;
+
+}
+
+.game{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.board{
+    display: flex;
+    grid-template-columns: repeat(3,var(--cell-size));
+    grid-template-rows: repeat(3,var(--cell-size));
+    gap: var(--board-gap);
+}
+
+.cell{
+    background: var(--color-cell);
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 2.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text);
+    transition: background-color 0.15s ease;
+
+}
+
+.cell:hover{
+    background: var(--color-cell-hover);
+}
+
+.cell:disabled{
+    cursor: not-allowed;
+}
+
+.reset-btn{
+    padding: 0.6rem 1.5 rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: var(--border-radius);
+    background: var(--color-x);
+    color: #000;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.reset-btn:hover{
+    opacity: 0.85;
+}
