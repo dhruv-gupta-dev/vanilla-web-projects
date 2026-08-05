@@ -36,13 +36,13 @@ body{
 }
 
 .board{
-    display: flex;
+    display: grid;
     grid-template-columns: repeat(3,var(--cell-size));
     grid-template-rows: repeat(3,var(--cell-size));
     gap: var(--board-gap);
 }
 
-.cell{
+.btn{
     background: var(--color-cell);
     border: none;
     border-radius: var(--border-radius);
@@ -57,11 +57,11 @@ body{
 
 }
 
-.cell:hover{
+.btn:hover{
     background: var(--color-cell-hover);
 }
 
-.cell:disabled{
+.btn:disabled{
     cursor: not-allowed;
 }
 
