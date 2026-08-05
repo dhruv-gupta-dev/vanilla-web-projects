@@ -18,3 +18,29 @@ function render(){
 }
 
 render();
+
+
+boardE1.addEventListener('click',handleCellClick);
+reset_btn.addEventListener('click',resetGame);
+
+function handleCellClick(event){
+    const clickedCell = event.target.closest('.cell');
+    if(!clickedCell) return;
+
+    const index = Number(clickedCell.dataset.index);
+
+    if(!gameActive || board[index] !== null) return;
+
+    board[index] = currentPlayer;
+    currentPlayer = currentPlayer === 'X'? 'O': 'X';
+
+    render();
+}
+
+function resetGame(){
+    board = Array(9).fil(null);
+    currentPlayer = 'X';
+    gameActive = true;
+    render();
+}
+
