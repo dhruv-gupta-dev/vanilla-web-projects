@@ -34,8 +34,9 @@ main{
     padding: 5px;
     font-size: large;
 }
-.task-list{
+#task-list{
     list-style-type: none;
+    padding: 0;
 }
 
 footer{ 
