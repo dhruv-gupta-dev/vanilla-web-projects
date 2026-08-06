@@ -79,3 +79,16 @@ body{
 .reset-btn:hover{
     opacity: 0.85;
 }
+
+.cell.x { 
+    color: var(--color-x); 
+}
+.cell.o {
+     color: var(--color-o);
+}
+
+.cell.winning-cell{
+    background: var(--color-cell-hover);
+    outline: 2px solid var(--color-x);
+    outline-offset: -2px;
+}

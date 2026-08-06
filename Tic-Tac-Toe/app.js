@@ -1,17 +1,24 @@
 let board = Array(9).fill(null);
 let currentPlayer = 'X';
 let gameActive = true;
+let winnningLine = null;
+
 
 const boardE1 = document.getElementById('board');
 const statusE1 = document.getElementById('status');
 const reset_btn = document.getElementById('reset_btn');
 const cellEls = document.querySelector('.cell');
 
+
+
 function render(){
     board.forEach((value,index)=>{
         const cellE1 = cellE1s[index];
         cellE1.textContent = value ?? '';
         cellE1.disabled = value !== null || !gameActive;
+        cellE1.classList.toggle('x', value === 'X');
+        cellE1.classList.toggle('o', value === 'O');
+        cellE1.classList.toggle('winningLine', winnningLine?.includes(index)?? false);
     });
 
     // statusE1.textContent = gameActive ? `Player &{currentPlayer}'s turn` : statusE1.textContent;
@@ -21,6 +28,7 @@ function render(){
 }
 
 render();
+
 
 
 boardE1.addEventListener('click',handleCellClick);
@@ -39,6 +47,7 @@ function handleCellClick(event){
 
     if(result){
         gameActive = false;
+        winnningLine = result.line;
         statusE1.textContent = `Player ${result.winner} wins!`;
     }
     else if(checkDraw(board)){
@@ -50,10 +59,12 @@ function handleCellClick(event){
     render();
 }
 
+
 function resetGame(){
     board = Array(9).fil(null);
     currentPlayer = 'X';
     gameActive = true;
+    winnningLine = null;
     render();
 }
 
