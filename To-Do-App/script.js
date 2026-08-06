@@ -1,4 +1,4 @@
-let b1 = document.getElementById("task-submit");
+// let b1 = document.getElementById("task-submit");
 let form = document.getElementById("task-form");
 let input = document.getElementById("task-input");
 let list = document.getElementById("task-list");
@@ -10,12 +10,42 @@ form.addEventListener("submit", function(event) {
         alert("Please Enter a Task");
         return;
     }
-    const cb = document.createElement("input");
-    cb.type = "checkbox";
-    const li = document.createElement("li");
-    li.textContent = val;
-    li.appendChild(cb);
-    list.appendChild(li);
-
+    
+    addTask(val);
     input.val = "";
-}) 
+});
+
+let task = [];
+
+function renderTasks() {
+    list.innerHTML = "";
+    tasks.forEach(task => {
+        const li = document.createElement("li");
+
+        const cb = document.createElement("input");
+        cb.type = "checkbox";
+
+        const span = document.createElement("span");
+        span.textContent = task.text;
+
+        const delBtn = document.createElement("button");
+        delBtn.type = "button";
+        delBtn.textContent = "Delete";
+        delBtn.addEventListener("click", () => deleteTask(task.id));
+
+        li.append(cb, span, delBtn);
+        list.appendChild(li);
+
+    });
+}
+
+function addTask(text) {
+    tasks.push({ id: Date.now(), text, completed: false });
+    renderTasks();
+}
+
+function deleteTask(id) {
+    tasks = tasks.filter(t => t.id !== id);
+    renderTasks();
+}
+
