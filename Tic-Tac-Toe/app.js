@@ -1,13 +1,13 @@
 let board = Array(9).fill(null);
 let currentPlayer = 'X';
 let gameActive = true;
-let winnningLine = null;
+let winningLine = null;
 
 
 const boardE1 = document.getElementById('board');
 const statusE1 = document.getElementById('status');
 const reset_btn = document.getElementById('reset_btn');
-const cellEls = document.querySelector('.cell');
+const cellE1s = document.querySelectorAll('.btn');
 
 
 
@@ -18,12 +18,12 @@ function render(){
         cellE1.disabled = value !== null || !gameActive;
         cellE1.classList.toggle('x', value === 'X');
         cellE1.classList.toggle('o', value === 'O');
-        cellE1.classList.toggle('winningLine', winnningLine?.includes(index)?? false);
+        cellE1.classList.toggle('winning-cell', winningLine?.includes(index)?? false);
     });
 
     // statusE1.textContent = gameActive ? `Player &{currentPlayer}'s turn` : statusE1.textContent;
     if (gameActive) {
-        statusEl.textContent = `Player ${currentPlayer}'s turn`;
+        statusE1.textContent = `Player ${currentPlayer}'s turn`;
     }
 }
 
@@ -35,7 +35,7 @@ boardE1.addEventListener('click',handleCellClick);
 reset_btn.addEventListener('click',resetGame);
 
 function handleCellClick(event){
-    const clickedCell = event.target.closest('.cell');
+    const clickedCell = event.target.closest('.btn');
     if(!clickedCell) return;
 
     const index = Number(clickedCell.dataset.index);
@@ -47,11 +47,12 @@ function handleCellClick(event){
 
     if(result){
         gameActive = false;
-        winnningLine = result.line;
+        winningLine = result.line;
         statusE1.textContent = `Player ${result.winner} wins!`;
     }
     else if(checkDraw(board)){
         statusE1.textContent = `It's a draw!`;
+        gameActive = false;
     }
     else{
     currentPlayer = currentPlayer === 'X'? 'O': 'X';
@@ -61,10 +62,10 @@ function handleCellClick(event){
 
 
 function resetGame(){
-    board = Array(9).fil(null);
+    board = Array(9).fill(null);
     currentPlayer = 'X';
     gameActive = true;
-    winnningLine = null;
+    winningLine = null;
     render();
 }
 
@@ -78,7 +79,7 @@ const WIN_PATTERNS = [
 function checkWinner(board){
     for(const pattern of WIN_PATTERNS){
         const [a,b,c] = pattern;
-        if(board[a] & board[a] === board[b] && board[a] === board[c]){
+        if(board[a] && board[a] === board[b] && board[a] === board[c]){
             return { 
                 winner: board[a],
                 line: pattern
