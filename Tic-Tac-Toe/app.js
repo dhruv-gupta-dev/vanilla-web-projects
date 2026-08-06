@@ -14,7 +14,10 @@ function render(){
         cellE1.disabled = value !== null || !gameActive;
     });
 
-    statusE1.textContent = gameActive ? `Player &{currentPlayer}'s turn` : statusE1.textContent;
+    // statusE1.textContent = gameActive ? `Player &{currentPlayer}'s turn` : statusE1.textContent;
+    if (gameActive) {
+        statusEl.textContent = `Player ${currentPlayer}'s turn`;
+    }
 }
 
 render();
@@ -32,8 +35,18 @@ function handleCellClick(event){
     if(!gameActive || board[index] !== null) return;
 
     board[index] = currentPlayer;
-    currentPlayer = currentPlayer === 'X'? 'O': 'X';
+    const result = checkWinner(board);
 
+    if(result){
+        gameActive = false;
+        statusE1.textContent = `Player ${result.winner} wins!`;
+    }
+    else if(checkDraw(board)){
+        statusE1.textContent = `It's a draw!`;
+    }
+    else{
+    currentPlayer = currentPlayer === 'X'? 'O': 'X';
+    }
     render();
 }
 
@@ -42,5 +55,29 @@ function resetGame(){
     currentPlayer = 'X';
     gameActive = true;
     render();
+}
+
+const WIN_PATTERNS = [
+  [0, 1, 2], [3, 4, 5], [6, 7, 8], // rows
+  [0, 3, 6], [1, 4, 7], [2, 5, 8], // columns
+  [0, 4, 8], [2, 4, 6]             // diagonals
+];
+
+
+function checkWinner(board){
+    for(const pattern of WIN_PATTERNS){
+        const [a,b,c] = pattern;
+        if(board[a] & board[a] === board[b] && board[a] === board[c]){
+            return { 
+                winner: board[a],
+                line: pattern
+            };
+        } 
+    }
+    return null;
+}
+
+function checkDraw(board){
+    return board.every(cell => cell !== null);
 }
 
