@@ -1,22 +1,21 @@
 let b1 = document.getElementById("task-submit");
 let form = document.getElementById("task-form");
+let input = document.getElementById("task-input");
+let list = document.getElementById("task-list");
 
 form.addEventListener("submit", function(event) {
     event.preventDefault();
-})
-b1.onclick = function(){
-    let a1 = document.getElementById("task-input").value;
-
-    if (a1.trim() === "") {
+    const val = input.value.trim();
+    if(val === ""){
         alert("Please Enter a Task");
         return;
     }
-    let cb = document.createElement("input");
+    const cb = document.createElement("input");
     cb.type = "checkbox";
-    // document.getElementById("task-list").appendChild(cb);
-    let li = document.createElement("li");
-    li.textContent = a1;
+    const li = document.createElement("li");
+    li.textContent = val;
     li.appendChild(cb);
-    document.getElementById("task-list").appendChild(li);
-    document.getElementById("task-input").value = "";
-}
+    list.appendChild(li);
+
+    input.val = "";
+}) 
