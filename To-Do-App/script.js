@@ -36,6 +36,10 @@ function renderTasks() {
         li.append(cb, span, delBtn);
         list.appendChild(li);
 
+        cb.checked = task.completed;
+        cb.addEventListener("change", () => toggleTask(task.id));
+        if (task.completed) span.classList.add("completed");
+
     });
 }
 
@@ -49,3 +53,9 @@ function deleteTask(id) {
     renderTasks();
 }
 
+function toggleTask(id) {
+    tasks = tasks.map(t =>
+        t.id === id ? { ...t, completed: !t.completed } : t
+    );
+    renderTasks();
+}
